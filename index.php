@@ -25,20 +25,21 @@ $cn = mysqli_connect($Server, $user, $pass, $bd) or die("Error de conexión");
 
 
 if (isset($_POST['dis1'])) {
-  $Rss = mysqli_query($cn, "update dispositivos set Nombre='". $_POST['txtnombredis1'] ."' where IdDispositivo='1'");
+  $Rss = mysqli_query($cn, "update dispositivos set Nombre='" . $_POST['txtnombredis1'] . "' where IdDispositivo='1'");
 }
 
 $Rs = mysqli_query($cn, "select * from dispositivos");
 $dispositivo = array();
-$estado=array();
+$estado = array();
 while ($item = mysqli_fetch_array($Rs)) {
   $dispositivo[] = $item["Nombre"];
-  $estado[]=$item["estado"];
+  $estado[] = $item["Estado"];
 }
 
 ?>
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -81,8 +82,6 @@ while ($item = mysqli_fetch_array($Rs)) {
           "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[1] . "' target='_blank'>" . $noticias[1] .
           "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[2] . "' target='_blank'>" . $noticias[2] .
           "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[3] . "' target='_blank'>" . $noticias[3] . ".</a>";
-
-          
         ?>
       </span>
     </marquee>
@@ -100,23 +99,23 @@ while ($item = mysqli_fetch_array($Rs)) {
 
                   <div class="switch center-align">
                     <label>
-                      <span id="off">Off</span>
-                      <input type="checkbox" id="btn">
+                      <span id="off0">Off</span>
+                      <input type="checkbox" id="btn0">
                       <span class="lever"></span>
-                      <span id="on">On</span>
+                      <span id="on0">On</span>
                     </label>
                   </div>
 
                 </div>
                 <div class="card-action">
-                  <span class="valign-wrapper  white-text" style="font-size:small;justify-content:center"><i id="icomsj" class="material-icons yellow-text">notifications</i><span id="notificacion">El dispositivo está xxxxxxxx</span></span>
+                  <span class="valign-wrapper  white-text" style="font-size:small;justify-content:center"><i id="icomsj0" class="material-icons yellow-text">notifications</i><span id="notificacion0">El dispositivo está xxxxxxxx</span></span>
                 </div>
                 <div class="card-reveal center-align">
                   <strong> <span class="card-title grey-text text-darken-4" style="font-size:medium">Cambiar Nombre<i class="material-icons right">close</i></span></strong>
 
                   <form action="" method="POST">
-                  <input type="text" name="txtnombre" id="txtnombredis1" value="<?php echo $dispositivo[0]; ?>">
-                  <input type="submit" name="dis1" value="Guardar" style="font-size:medium;background-color: #01579b;" class="btn btn-small card-title text-white">
+                    <input type="text" name="txtnombredis1" id="txtnombredis1" value="<?php echo $dispositivo[0]; ?>">
+                    <input type="submit" name="dis1" value="Guardar" style="font-size:medium;background-color: #01579b;" class="btn btn-small card-title text-white">
                   </form>
                 </div>
               </div>
@@ -286,6 +285,9 @@ while ($item = mysqli_fetch_array($Rs)) {
 
   </footer>
   <script src="js/validacion.js"></script>
+  <?php
+  include 'lib/tools/validacion.php';
+  ?>
 </body>
 
 </html>
