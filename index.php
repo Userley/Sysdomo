@@ -1,8 +1,11 @@
 <?php
 //setlocale(LC_ALL, "es_PE.UTF-8");
-date_default_timezone_set('America/Lima');
+
+include 'Conex.php';
 include 'lib/tools/tools.php';
 include 'lib/simplehtmldom/simple_html_dom.php';
+date_default_timezone_set('America/Lima');
+
 $tools = new tools();
 $mes = $tools->GetMes(date("n"));
 $dia = $tools->GetDia(date("N"));
@@ -17,11 +20,6 @@ foreach ($html->find('a[class=RobotoSlabRegular colorTextBlanco textoTruncado]')
   $linknoticias[] = $element->href;
 }
 
-$Server = "localhost";
-$bd = "domobd";
-$user = "root";
-$pass = "";
-$cn = mysqli_connect($Server, $user, $pass, $bd) or die("Error de conexión");
 
 
 if (isset($_POST['dis1'])) {
@@ -185,6 +183,8 @@ while ($item = mysqli_fetch_array($Rs)) {
             </div>
           </div>
         </div>
+      </div>
+      <div class="row">
         <div class="col l4 m12 s12">
           <div class="row">
             <div class="col s12 m12">
@@ -216,6 +216,7 @@ while ($item = mysqli_fetch_array($Rs)) {
             </div>
           </div>
         </div>
+
         <div class="col l4 m12 s12">
           <div class="row">
             <div class="col s12 m12">
@@ -284,10 +285,11 @@ while ($item = mysqli_fetch_array($Rs)) {
   <footer>
 
   </footer>
-  <script src="js/validacion.js"></script>
+
   <?php
   include 'lib/tools/validacion.php';
   ?>
+  <script src="js/validacion.js"></script>
 </body>
 
 </html>
