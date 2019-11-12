@@ -307,49 +307,6 @@ while ($item = mysqli_fetch_array($Rs)) {
 			}		
     </script> -->
 
-
-  <script>
-      var latitud='';
-      var longitud='';
-      navigator.geolocation.getCurrentPosition(function(location) {
-         latitud = location.coords.latitude;
-         longitud = location.coords.longitude;
-      });
-
-    $("#btn0").on("click", function() {
-
-      var condiciones = $("#btn0").is(":checked");
-
-      if (condiciones) {
-        var est = 'Activado';
-      } else {
-        var est = 'Desactivado';
-      }
-debugger;
-      var parametros = {
-        "codope": 1,
-        "iduser": 1,
-        "iddis": 1,
-        "estado": est,
-        "longitud": longitud,
-        "latitud": latitud
-      };
-
-      $.ajax({
-
-        data: parametros,
-        url: 'lib/tools/acciones.php',
-        type: 'POST',
-        beforeSend: function() {
-
-        },
-        success: function(response) {
-
-        }
-      });
-
-    })
-  </script>
   <?php
   include 'lib/tools/validacionInterruptores.php';
   ?>
