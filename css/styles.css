@@ -5,3 +5,7 @@ a{
 a:hover{
 color:#e65100;
 }
+
+.usuario{
+    border-radius: 25px;
+}

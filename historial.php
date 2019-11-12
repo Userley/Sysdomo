@@ -1,10 +1,9 @@
 <?php
 //setlocale(LC_ALL, "es_PE.UTF-8");
-
+date_default_timezone_set('America/Lima');
 include 'Conex.php';
 include 'lib/tools/tools.php';
 include 'lib/simplehtmldom/simple_html_dom.php';
-date_default_timezone_set('America/Lima');
 
 $tools = new tools();
 $mes = $tools->GetMes(date("n"));
@@ -29,6 +28,19 @@ while ($item = mysqli_fetch_array($Rs)) {
   $estado[] = $item["Estado"];
 }
 
+
+?>
+<script>
+  navigator.geolocation.getCurrentPosition(function(location) {
+    document.cookie = "vlat=" + location.coords.latitude + "; max-age=3600; path=/";
+    document.cookie = "vlng=" + location.coords.longitude + "; max-age=3600; path=/";
+    // var lat = location.coords.latitude;
+    // var lng = location.coords.longitude;
+  });
+</script>
+<?php
+$longitud = $_COOKIE["vlat"];
+$latitud = $_COOKIE["vlng"];
 ?>
 <!DOCTYPE html>
 <html lang="en">
@@ -87,6 +99,7 @@ while ($item = mysqli_fetch_array($Rs)) {
         <thead>
           <tr>
             <th>Usuario</th>
+            <th>Fecha</th>
             <th>Hora</th>
             <th>Dispositivo</th>
             <th>Ubicación</th>
@@ -94,16 +107,19 @@ while ($item = mysqli_fetch_array($Rs)) {
         </thead>
         <tbody>
           <tr>
-            <td><img src="" alt=""></td>
-            <td>22:58</td>
+            <td><img src="img/team-1.jpg" title="Usuario1" width="40px" alt="" class="usuario"></td>
+            <td><?php echo date("d-n-y"); ?></td>
+            <td><?php echo date("h:i A"); ?></td>
             <td>Luz Habitación</td>
-            <td>Trujillo</td>
+            <td><span id="ubicacion"><a href='https://maps.google.com/?q=<?php echo $longitud; ?>,<?php echo $latitud; ?>' target="_blank">Ver</a></span></td>
           </tr>
         </tbody>
       </table>
     </div>
 
   </section>
+  <script src="js/validacion.js"></script>
+
 </body>
 
 </html>

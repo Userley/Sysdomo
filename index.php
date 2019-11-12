@@ -87,6 +87,7 @@ while ($item = mysqli_fetch_array($Rs)) {
   <div class="divider"></div>
   <section>
     <div class="container">
+    <div><h5>Iluminación</h5></div>
       <div class="row">
         <div class="col l4 m12 s12">
           <div class="row">
@@ -184,6 +185,7 @@ while ($item = mysqli_fetch_array($Rs)) {
           </div>
         </div>
       </div>
+      <div><h5>Seguridad</h5></div>
       <div class="row">
         <div class="col l4 m12 s12">
           <div class="row">
@@ -282,14 +284,31 @@ while ($item = mysqli_fetch_array($Rs)) {
       </div>
     </div>
   </section>
-  <footer>
 
+
+  <!-- <footer>
+  <div id='coordenadas'></div> 
   </footer>
-
+  <script type="text/javascript">
+			if (navigator.geolocation) { //Validar si hay acceso web a la ubicación
+				navigator.geolocation.getCurrentPosition(mostrarUbicacion); //Obtiene la posición
+				} else {
+				alert("¡Error! Este navegador no soporta la Geolocalización.");
+			}
+			
+			//Funcion para obtener latitud y longitud
+			function mostrarUbicacion(position) {
+				var latitud = position.coords.latitude; //Obtener latitud
+				var longitud = position.coords.longitude; //Obtener longitud
+				var div = document.getElementById("coordenadas");
+				div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
+			}		
+		</script> -->
   <?php
-  include 'lib/tools/validacion.php';
+  include 'lib/tools/validacionInterruptores.php';
   ?>
   <script src="js/validacion.js"></script>
+ 
 </body>
 
 </html>
