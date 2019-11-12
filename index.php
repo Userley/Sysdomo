@@ -88,7 +88,7 @@ while ($item = mysqli_fetch_array($Rs)) {
   <section>
     <div class="container">
       <div>
-        <h5>Iluminación</h5>
+        <h5 style="text-align:center;color:steelblue"><strong>Iluminación</strong></h5>
       </div>
       <div class="row">
         <div class="col l4 m12 s12">
@@ -188,7 +188,7 @@ while ($item = mysqli_fetch_array($Rs)) {
         </div>
       </div>
       <div>
-        <h5>Seguridad</h5>
+        <h5 style="text-align:center;color:steelblue"><strong>Seguridad</strong></h5>
       </div>
       <div class="row">
         <div class="col l4 m12 s12">

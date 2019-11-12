@@ -22,24 +22,9 @@ foreach ($html->find('a[class=RobotoSlabRegular colorTextBlanco textoTruncado]')
 
 $Rs = mysqli_query($cn, "SELECT concat(U.Nombres,' ', U.Apellidos) AS Usuario,U.NomUser, U.Img, D.Nombre,H.Estado , H.Fecha, H.Hora, H.Latitud, H.Longitud FROM usuarios U
 INNER JOIN historial H ON H.IdUsuario=U.IdUsuario
-INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo");
-
-
-
-
+INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Desc");
 ?>
-<script>
-  navigator.geolocation.getCurrentPosition(function(location) {
-    document.cookie = "vlat=" + location.coords.latitude + "; max-age=3600; path=/";
-    document.cookie = "vlng=" + location.coords.longitude + "; max-age=3600; path=/";
-    // var lat = location.coords.latitude;
-    // var lng = location.coords.longitude;
-  });
-</script>
-<!-- <?php
-      // $longitud = $_COOKIE["vlat"];
-      // $latitud = $_COOKIE["vlng"];
-      ?> -->
+
 <!DOCTYPE html>
 <html lang="en">
 
