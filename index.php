@@ -87,7 +87,9 @@ while ($item = mysqli_fetch_array($Rs)) {
   <div class="divider"></div>
   <section>
     <div class="container">
-    <div><h5>Iluminación</h5></div>
+      <div>
+        <h5>Iluminación</h5>
+      </div>
       <div class="row">
         <div class="col l4 m12 s12">
           <div class="row">
@@ -185,7 +187,9 @@ while ($item = mysqli_fetch_array($Rs)) {
           </div>
         </div>
       </div>
-      <div><h5>Seguridad</h5></div>
+      <div>
+        <h5>Seguridad</h5>
+      </div>
       <div class="row">
         <div class="col l4 m12 s12">
           <div class="row">
@@ -272,8 +276,6 @@ while ($item = mysqli_fetch_array($Rs)) {
                 </div>
                 <div class="card-reveal center-align">
                   <strong> <span class="card-title grey-text text-darken-4" style="font-size:medium">Cambiar Nombre<i class="material-icons right">close</i></span></strong>
-
-
                   <input type="text" name=" " id=" " value="<?php echo $dispositivo[5]; ?>">
                   <input type="button" value="Guardar" style="font-size:medium;background-color: #01579b;" class="btn btn-small card-title text-white">
                 </div>
@@ -303,12 +305,56 @@ while ($item = mysqli_fetch_array($Rs)) {
 				var div = document.getElementById("coordenadas");
 				div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
 			}		
-		</script> -->
+    </script> -->
+
+
+  <script>
+      var latitud='';
+      var longitud='';
+      navigator.geolocation.getCurrentPosition(function(location) {
+         latitud = location.coords.latitude;
+         longitud = location.coords.longitude;
+      });
+
+    $("#btn0").on("click", function() {
+
+      var condiciones = $("#btn0").is(":checked");
+
+      if (condiciones) {
+        var est = 'Activado';
+      } else {
+        var est = 'Desactivado';
+      }
+debugger;
+      var parametros = {
+        "codope": 1,
+        "iduser": 1,
+        "iddis": 1,
+        "estado": est,
+        "longitud": longitud,
+        "latitud": latitud
+      };
+
+      $.ajax({
+
+        data: parametros,
+        url: 'lib/tools/acciones.php',
+        type: 'POST',
+        beforeSend: function() {
+
+        },
+        success: function(response) {
+
+        }
+      });
+
+    })
+  </script>
   <?php
   include 'lib/tools/validacionInterruptores.php';
   ?>
   <script src="js/validacion.js"></script>
- 
+
 </body>
 
 </html>

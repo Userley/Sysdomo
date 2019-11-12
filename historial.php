@@ -20,13 +20,11 @@ foreach ($html->find('a[class=RobotoSlabRegular colorTextBlanco textoTruncado]')
 }
 
 
-$Rs = mysqli_query($cn, "select * from dispositivos");
-$dispositivo = array();
-$estado = array();
-while ($item = mysqli_fetch_array($Rs)) {
-  $dispositivo[] = $item["Nombre"];
-  $estado[] = $item["Estado"];
-}
+$Rs = mysqli_query($cn, "SELECT concat(U.Nombres,' ', U.Apellidos) AS Usuario,U.NomUser, U.Img, D.Nombre,H.Estado , H.Fecha, H.Hora, H.Latitud, H.Longitud FROM usuarios U
+INNER JOIN historial H ON H.IdUsuario=U.IdUsuario
+INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo");
+
+
 
 
 ?>
@@ -38,10 +36,10 @@ while ($item = mysqli_fetch_array($Rs)) {
     // var lng = location.coords.longitude;
   });
 </script>
-<?php
-$longitud = $_COOKIE["vlat"];
-$latitud = $_COOKIE["vlng"];
-?>
+<!-- <?php
+      // $longitud = $_COOKIE["vlat"];
+      // $latitud = $_COOKIE["vlng"];
+      ?> -->
 <!DOCTYPE html>
 <html lang="en">
 
@@ -95,24 +93,39 @@ $latitud = $_COOKIE["vlng"];
   <section>
     <div class="container">
       <p></p>
-      <table class="table centered highlight ">
+      <strong>
+        <h5>
+          <p style="text-align: center;" class="light-blue-text text-darken-4">Hitorial de Actividades</p>
+        </h5>
+      </strong>
+      <table class="table centered highlight table-small">
         <thead>
           <tr>
             <th>Usuario</th>
-            <th>Fecha</th>
-            <th>Hora</th>
             <th>Dispositivo</th>
+            <th>Acción</th>
+            <th>Fecha / Hora</th>
             <th>Ubicación</th>
           </tr>
         </thead>
         <tbody>
-          <tr>
-            <td><img src="img/team-1.jpg" title="Usuario1" width="40px" alt="" class="usuario"></td>
-            <td><?php echo date("d-n-y"); ?></td>
-            <td><?php echo date("h:i A"); ?></td>
-            <td>Luz Habitación</td>
-            <td><span id="ubicacion"><a href='https://maps.google.com/?q=<?php echo $longitud; ?>,<?php echo $latitud; ?>' target="_blank">Ver</a></span></td>
-          </tr>
+          <?php
+          while ($item = mysqli_fetch_array($Rs)) {
+            if ($item["Estado"]=="Activado") {
+              $est = "green-text";
+            } else {
+              $est = "red-text";
+            }
+
+            echo "<tr>
+            <td><img src='" . $item["Img"] . "' title='" . utf8_encode($item["Usuario"]) . "' width='40px' alt='' class='usuario' style='vertical-align: middle;'>    <label style='vertical-align: middle;'>" . $item["NomUser"] . "</label></td>
+            <td style='font-size:14px'>" . $item["Nombre"] . "</td>
+            <td style='font-size:14px'><span class='" . $est . "'>" . $item["Estado"] . "</span></td>
+            <td style='font-size:14px'>" . $item["Fecha"] . " " . $item["Hora"] . "</td>
+            <td><a href='https://maps.google.com/?q=" . $item["Latitud"] . "," . $item["Longitud"] . "' target='_blank'><span class='new badge red' data-badge-caption=''>Ver</span></a></td>
+          </tr>";
+          }
+          ?>
         </tbody>
       </table>
     </div>
