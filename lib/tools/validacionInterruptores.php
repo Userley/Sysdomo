@@ -82,7 +82,7 @@ var parametros = {
 $.ajax({
 
   data: parametros,
-  url: 'lib/tools/acciones.php',
+  url: 'lib/datadomo/acciones.php',
   type: 'POST',
   beforeSend: function() {
 

@@ -23,7 +23,9 @@ if ($op == "1") {
 values ('" . $iduser . "','" . $iddis . "','" . $estdis . "','" . date("y-m-d") . "','" . date("H:i:s") . "','" . $lat . "','" . $lon . "') ");
 
     $RsDispositivos = mysqli_query($cn, "Update dispositivos set Estado=" . $est . " where IdDispositivo=" . $iddis);
-
+    /* Eliminar  solo prueba  */
+    $rs = mysqli_query($cn, "update dispositivos set Respuesta='" . $est . "' where IdDispositivo='" . $iddis . "'");
+    /*----------------------*/
     $resp = "exito";
 }
 
