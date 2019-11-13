@@ -32,6 +32,7 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
   <meta charset="UTF-8">
   <meta name="viewport" content="width=device-width, initial-scale=1.0">
   <meta http-equiv="X-UA-Compatible" content="ie=edge">
+  <link rel="icon" type="image/png" href="img/Home.png" />
   <link rel="stylesheet" href="lib/materialize/css/materialize.min.css">
   <link rel="stylesheet" href="css/styles.css">
   <link href="https://fonts.googleapis.com/icon?family=Material+Icons" rel="stylesheet">
