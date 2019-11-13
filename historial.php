@@ -44,7 +44,8 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
 <body bgcolor="#FAF5F4">
   <nav class="light-blue darken-4">
     <div class="nav-wrapper">
-      <a href="#!" class="brand-logo">Logo</a>
+      <div class="cabecera">
+      <a href="index.php" class="brand-logo"><img src="img/logo.png" alt="" width="85px" style="vertical-align: middle;"></a>
       <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
       <ul class="right hide-on-med-and-down">
         <li><a href="index.php">Inicio</a></li>
@@ -52,11 +53,12 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
         <li><a href="permisos.php">Permisos</a></li>
         <li><a href="logout.php"><i class="material-icons">exit_to_app</i></a></li>
       </ul>
+      </div>
     </div>
   </nav>
 
   <ul class="sidenav" id="mobile-demo">
-    <li><a href="index.php">Inicio</a></li>
+    <li ><a href="index.php">Inicio</a></li>
     <li class="active"><a href="historial.php">Historial</a></li>
     <li><a href="permisos.php">Permisos</a></li>
     <li><a href="logout.php"><i class="material-icons">exit_to_app</i>Salir</a></li>
@@ -66,22 +68,21 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
     <marquee behavior="" direction="left" scrollamount="3" style="height:20px">
       <span style="font-size:12px;">
         <?php
-        echo "🌎 <strong>Trujillo, " . utf8_decode($dia) . " " . date("d") . " de " . $mes . " de " . date("Y") . "</strong>  |
-        <strong style='color:black;'>🎫Noticias:</strong> ✎ <a href='http://www.laindustria.pe/" . $linknoticias[0] . "' target='_blank'>" . $noticias[0] .
-          "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[1] . "' target='_blank'>" . $noticias[1] .
-          "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[2] . "' target='_blank'>" . $noticias[2] .
-          "</a> - ✎ <a href='http://www.laindustria.pe/" . $linknoticias[3] . "' target='_blank'>" . $noticias[3] . ".</a>";
+        echo "📌 <strong>Trujillo, " . $dia . " " . date("d") . " de " . $mes . " de " . date("Y") . "</strong>  |
+        <strong style='color:black;'>📰Noticias:</strong> 🔗 <a href='http://www.laindustria.pe/" . $linknoticias[0] . "' target='_blank'>" . $noticias[0] .
+          "</a> - 🔗 <a href='http://www.laindustria.pe/" . $linknoticias[1] . "' target='_blank'>" . $noticias[1] .
+          "</a> - 🔗 <a href='http://www.laindustria.pe/" . $linknoticias[2] . "' target='_blank'>" . $noticias[2] .
+          "</a> - 🔗 <a href='http://www.laindustria.pe/" . $linknoticias[3] . "' target='_blank'>" . $noticias[3] . ".</a>";
         ?>
       </span>
-    </marquee>
-  </div>
+</marquee>
   <div class="divider"></div>
   <section>
     <div class="container">
       <p></p>
       <strong>
         <h5>
-          <p style="text-align: center;" class="light-blue-text text-darken-4">Hitorial de Actividades</p>
+          <p style="text-align: center;" class="light-blue-text text-darken-4"><strong>Historial de Actividades</strong></p>
         </h5>
       </strong>
       <table class="table centered highlight table-small">
@@ -89,7 +90,7 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
           <tr>
             <th>Usuario</th>
             <th>Dispositivo</th>
-            <th>Acción</th>
+            <th>Estado</th>
             <th>Fecha / Hora</th>
             <th>Ubicación</th>
           </tr>
@@ -106,7 +107,7 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
             echo "<tr>
             <td><img src='" . $item["Img"] . "' title='" . utf8_encode($item["Usuario"]) . "' width='40px' alt='' class='usuario' style='vertical-align: middle;'>    <label style='vertical-align: middle;'>" . $item["NomUser"] . "</label></td>
             <td style='font-size:14px'>" . $item["Nombre"] . "</td>
-            <td style='font-size:14px'><span class='" . $est . "'>" . $item["Estado"] . "</span></td>
+            <td style='font-size:25px'><span class='" . $est . "'>●</span></td>
             <td style='font-size:14px'>" . $item["Fecha"] . " " . $item["Hora"] . "</td>
             <td><a href='https://maps.google.com/?q=" . $item["Latitud"] . "," . $item["Longitud"] . "' target='_blank'><span class='new badge red' data-badge-caption=''>Ver</span></a></td>
           </tr>";
