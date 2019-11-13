@@ -1,5 +1,7 @@
 $(document).ready(function () {
   $('.sidenav').sidenav();
+  $('select').formSelect();
+  $('.sidenav').sidenav();
 });
 
 $("marquee").hover(function () {

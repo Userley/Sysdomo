@@ -5,6 +5,10 @@ include 'Conex.php';
 include 'lib/tools/tools.php';
 include 'lib/simplehtmldom/simple_html_dom.php';
 date_default_timezone_set('America/Lima');
+session_start();
+if (!isset($_SESSION["idusuario"])) {
+  header("location:login.php");
+}
 
 $tools = new tools();
 $mes = $tools->GetMes(date("n"));
@@ -12,13 +16,22 @@ $dia = $tools->GetDia(date("N"));
 
 
 $html = file_get_html("http://www.laindustria.pe/");
-
 $noticias = array();
 $linknoticias = array();
 foreach ($html->find('a[class=RobotoSlabRegular colorTextBlanco textoTruncado]') as $element) {
   $noticias[] = $element->plaintext;
   $linknoticias[] = $element->href;
 }
+
+
+$idusuario = $_SESSION["idusuario"];
+$usuario = utf8_encode($_SESSION["usuario"]);
+$correo = $_SESSION["Correo"];
+$img = $_SESSION["Img"];
+
+
+
+
 
 
 
@@ -55,24 +68,37 @@ while ($item = mysqli_fetch_array($Rs)) {
   <nav class="light-blue darken-4">
     <div class="nav-wrapper">
       <div class="cabecera">
-      <a href="index.php" class="brand-logo"><img src="img/logo.png" alt="" width="85px" style="vertical-align: middle;"></a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li class="active"><a href="index.php">Inicio</a></li>
-        <li><a href="historial.php">Historial</a></li>
-        <li><a href="permisos.php">Permisos</a></li>
-        <li><a href="logout.php"><i class="material-icons">exit_to_app</i></a></li>
-      </ul>
+        <a href="index.php" class="brand-logo"><img src="img/logo.png" alt="" width="85px" style="vertical-align: middle;"></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+
+        <ul class="right hide-on-med-and-down">
+          <li class="active"><a href="index.php">Inicio</a></li>
+          <li><a href="historial.php">Historial</a></li>
+          <li><a href="permisos.php">Permisos</a></li>
+          <li><a href="logout.php"><i class="material-icons">exit_to_app</i></a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <ul class="sidenav" id="mobile-demo">
+
+  <ul class="sidenav" id="slide-out">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="img/menu.jpg">
+        </div>
+        <a href="#user"><img class="circle" src="<?php echo $img; ?>"></a>
+        <a href="#name"><span class="white-text name"><?php echo $usuario; ?></span></a>
+        <a href="#email"><span class="white-text email"><?php echo $correo; ?></span></a>
+      </div>
+    </li>
     <li class="active"><a href="index.php">Inicio</a></li>
     <li><a href="historial.php">Historial</a></li>
     <li><a href="permisos.php">Permisos</a></li>
     <li><a href="logout.php"><i class="material-icons">exit_to_app</i>Salir</a></li>
   </ul>
+
 
   <div style="background:white">
     <marquee behavior="" direction="left" scrollamount="3" style="height:20px">

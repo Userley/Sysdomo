@@ -1,6 +1,11 @@
 <?php
 //setlocale(LC_ALL, "es_PE.UTF-8");
 date_default_timezone_set('America/Lima');
+session_start();
+if (!isset($_SESSION["idusuario"])) {
+  header("location:login.php");
+}
+
 include 'Conex.php';
 include 'lib/tools/tools.php';
 include 'lib/simplehtmldom/simple_html_dom.php';
@@ -9,15 +14,21 @@ $tools = new tools();
 $mes = $tools->GetMes(date("n"));
 $dia = $tools->GetDia(date("N"));
 
-
 $html = file_get_html("http://www.laindustria.pe/");
-
 $noticias = array();
 $linknoticias = array();
 foreach ($html->find('a[class=RobotoSlabRegular colorTextBlanco textoTruncado]') as $element) {
   $noticias[] = $element->plaintext;
   $linknoticias[] = $element->href;
 }
+
+
+$idusuario = $_SESSION["idusuario"];
+$usuario = utf8_encode($_SESSION["usuario"]);
+$correo = $_SESSION["Correo"];
+$img = $_SESSION["Img"];
+
+
 
 
 $Rs = mysqli_query($cn, "SELECT concat(U.Nombres,' ', U.Apellidos) AS Usuario,U.NomUser, U.Img, D.Nombre,H.Estado , H.Fecha, H.Hora, H.Latitud, H.Longitud FROM usuarios U
@@ -45,20 +56,30 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
   <nav class="light-blue darken-4">
     <div class="nav-wrapper">
       <div class="cabecera">
-      <a href="index.php" class="brand-logo"><img src="img/logo.png" alt="" width="85px" style="vertical-align: middle;"></a>
-      <a href="#" data-target="mobile-demo" class="sidenav-trigger"><i class="material-icons">menu</i></a>
-      <ul class="right hide-on-med-and-down">
-        <li><a href="index.php">Inicio</a></li>
-        <li class="active"><a href="historial.php">Historial</a></li>
-        <li><a href="permisos.php">Permisos</a></li>
-        <li><a href="logout.php"><i class="material-icons">exit_to_app</i></a></li>
-      </ul>
+        <a href="index.php" class="brand-logo"><img src="img/logo.png" alt="" width="85px" style="vertical-align: middle;"></a>
+        <a href="#" data-target="slide-out" class="sidenav-trigger"><i class="material-icons">menu</i></a>
+        <ul class="right hide-on-med-and-down">
+          <li><a href="index.php">Inicio</a></li>
+          <li class="active"><a href="historial.php">Historial</a></li>
+          <li><a href="permisos.php">Permisos</a></li>
+          <li><a href="logout.php"><i class="material-icons">exit_to_app</i></a></li>
+        </ul>
       </div>
     </div>
   </nav>
 
-  <ul class="sidenav" id="mobile-demo">
-    <li ><a href="index.php">Inicio</a></li>
+  <ul class="sidenav" id="slide-out">
+    <li>
+      <div class="user-view">
+        <div class="background">
+          <img src="img/menu.jpg">
+        </div>
+        <a href="#user"><img class="circle" src="<?php echo $img; ?>"></a>
+        <a href="#name"><span class="white-text name"><?php echo $usuario; ?></span></a>
+        <a href="#email"><span class="white-text email"><?php echo $correo; ?></span></a>
+      </div>
+    </li>
+    <li><a href="index.php">Inicio</a></li>
     <li class="active"><a href="historial.php">Historial</a></li>
     <li><a href="permisos.php">Permisos</a></li>
     <li><a href="logout.php"><i class="material-icons">exit_to_app</i>Salir</a></li>
@@ -75,50 +96,50 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
           "</a> - 🔗 <a href='http://www.laindustria.pe/" . $linknoticias[3] . "' target='_blank'>" . $noticias[3] . ".</a>";
         ?>
       </span>
-</marquee>
-  <div class="divider"></div>
-  <section>
-    <div class="container">
-      <p></p>
-      <strong>
-        <h5>
-          <p style="text-align: center;" class="light-blue-text text-darken-4"><strong>Historial de Actividades</strong></p>
-        </h5>
-      </strong>
-      <table class="table centered highlight table-small">
-        <thead>
-          <tr>
-            <th>Usuario</th>
-            <th>Dispositivo</th>
-            <th>Estado</th>
-            <th>Fecha / Hora</th>
-            <th>Ubicación</th>
-          </tr>
-        </thead>
-        <tbody>
-          <?php
-          while ($item = mysqli_fetch_array($Rs)) {
-            if ($item["Estado"]=="Activado") {
-              $est = "green-text";
-            } else {
-              $est = "red-text";
-            }
+    </marquee>
+    <div class="divider"></div>
+    <section>
+      <div class="container">
+        <p></p>
+        <strong>
+          <h5>
+            <p style="text-align: center;" class="light-blue-text text-darken-4"><strong>Historial de Actividades</strong></p>
+          </h5>
+        </strong>
+        <table class="table centered highlight table-small">
+          <thead>
+            <tr>
+              <th>Usuario</th>
+              <th>Dispositivo</th>
+              <th>Estado</th>
+              <th>Fecha / Hora</th>
+              <th>Ubicación</th>
+            </tr>
+          </thead>
+          <tbody>
+            <?php
+            while ($item = mysqli_fetch_array($Rs)) {
+              if ($item["Estado"] == "Activado") {
+                $est = "green-text";
+              } else {
+                $est = "red-text";
+              }
 
-            echo "<tr>
-            <td><img src='" . $item["Img"] . "' title='" . utf8_encode($item["Usuario"]) . "' width='40px' alt='' class='usuario' style='vertical-align: middle;'>    <label style='vertical-align: middle;'>" . $item["NomUser"] . "</label></td>
+              echo "<tr>
+            <td><img src='" . $item["Img"] . "' title='" . utf8_encode($item["Usuario"]) . "' width='45px' alt='' class='usuario' style='vertical-align: middle;'>    <label style='vertical-align: middle;'>" . $item["NomUser"] . "</label></td>
             <td style='font-size:14px'>" . $item["Nombre"] . "</td>
-            <td style='font-size:25px'><span class='" . $est . "'>●</span></td>
+            <td style='font-size:30px'><span class='" . $est . "'>●</span></td>
             <td style='font-size:14px'>" . $item["Fecha"] . " " . $item["Hora"] . "</td>
             <td><a href='https://maps.google.com/?q=" . $item["Latitud"] . "," . $item["Longitud"] . "' target='_blank'><span class='new badge red' data-badge-caption=''>Ver</span></a></td>
           </tr>";
-          }
-          ?>
-        </tbody>
-      </table>
-    </div>
+            }
+            ?>
+          </tbody>
+        </table>
+      </div>
 
-  </section>
-  <script src="js/validacion.js"></script>
+    </section>
+    <script src="js/validacion.js"></script>
 
 </body>
 

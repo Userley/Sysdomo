@@ -20,7 +20,7 @@ if ($est == '1') {
 if ($op == "1") {
 
     $RsHistorial = mysqli_query($cn, "insert into historial(IdUsuario,IdDispositivo,Estado,Fecha,Hora,Latitud,Longitud) 
-values ('" . $iduser . "','" . $iddis . "','" . $estdis . "','" . date("d-m-y") . "','" . date("H:i:s") . "','" . $lat . "','" . $lon . "') ");
+values ('" . $iduser . "','" . $iddis . "','" . $estdis . "','" . date("y-m-d") . "','" . date("H:i:s") . "','" . $lat . "','" . $lon . "') ");
 
     $RsDispositivos = mysqli_query($cn, "Update dispositivos set Estado=" . $est . " where IdDispositivo=" . $iddis);
 

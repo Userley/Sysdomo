@@ -16,6 +16,11 @@ color:#e65100;
 }
 
 
+.switch{
+    transform: scale(1.4);
+}
+
+
 .hijologin{
 background:ghostwhite;
 	position: absolute;

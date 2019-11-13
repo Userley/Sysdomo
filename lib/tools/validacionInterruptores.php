@@ -1,15 +1,15 @@
 <?php
-$rs=mysqli_query($cn,"select * from dispositivos");
+$rs = mysqli_query($cn, "select * from dispositivos");
 
-$count=mysqli_num_rows($rs);
-$x=0;
+$count = mysqli_num_rows($rs);
+$x = 0;
 while ($item = mysqli_fetch_array($rs)) {
-  if ($item["Estado"]=='1') {
+  if ($item["Respuesta"] == '1') {
     echo "<script>$('#btn" . $x . "').attr('checked',true)</script>";
-  }else{
+  } else {
     echo "<script>$('#btn" . $x . "').attr('checked',false)</script>";
   }
-  $x=$x+1;
+  $x = $x + 1;
 }
 
 
@@ -71,8 +71,8 @@ if (condiciones) {
 }
 var parametros = {
   'codope': 1,
-  'iduser': 1,
-  'iddis': " . ($i+1) . ",
+  'iduser': " . $idusuario . ",
+  'iddis': " . ($i + 1) . ",
   'estado': est,
   'longitud': longitud,
   'latitud': latitud
