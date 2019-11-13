@@ -12,15 +12,16 @@ while ($item = mysqli_fetch_array($rs)) {
   $x = $x + 1;
 }
 
+// var latitud='';
+// var longitud='';
+// navigator.geolocation.getCurrentPosition(function(location) {
+//    latitud = location.coords.latitude;
+//    longitud = location.coords.longitude;
+// });
 
 echo "<script>
 
-var latitud='';
-var longitud='';
-navigator.geolocation.getCurrentPosition(function(location) {
-   latitud = location.coords.latitude;
-   longitud = location.coords.longitude;
-});
+
 
 $(document).ready(function () {";
 

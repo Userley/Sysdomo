@@ -335,7 +335,14 @@ while ($item = mysqli_fetch_array($Rs)) {
 				div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
 			}		
     </script> -->
-
+  <script>
+    var latitud = '';
+    var longitud = '';
+    navigator.geolocation.getCurrentPosition(function(location) {
+      latitud = location.coords.latitude;
+      longitud = location.coords.longitude;
+    });
+  </script>
   <?php
   include 'lib/tools/validacionInterruptores.php';
   ?>

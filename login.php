@@ -1,17 +1,13 @@
 <?php
 include 'Conex.php';
-$RsUser = mysqli_query($cn, "select * from usuarios");
-$respuesta = "";
+
 session_start();
 
 if (isset($_SESSION["idusuario"])) {
     header("location:index.php");
-}else{
-
-    
 }
 
-
+$respuesta = "";
 
 if (isset($_POST["login"])) {
 
@@ -29,11 +25,11 @@ if (isset($_POST["login"])) {
     }
 }
 
+$RsUser = mysqli_query($cn, "select * from usuarios");
 ?>
 
 <!DOCTYPE html>
 <html lang="en">
-
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -46,14 +42,11 @@ if (isset($_POST["login"])) {
     <script src="lib/materialize/js/materialize.min.js"></script>
     <title>Document</title>
 </head>
-
 <body class="light-blue darken-4">
     <div class="section"></div>
     <main>
         <center>
             <img class="responsive-img" style="width: 150px;" src="img/logo.png" />
-            <!-- <div class="section"></div> -->
-
             <h5 class="white-text">Por favor, ingrese con su cuenta</h5>
             <div class="section"></div>
 
