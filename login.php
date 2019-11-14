@@ -11,17 +11,19 @@ $respuesta = "";
 
 if (isset($_POST["login"])) {
 
-    $RslistUser = mysqli_query($cn, "select * from usuarios where NomUser='" . $_POST["usuario"] . "'  and Password='" . $_POST["password"] . "'");
-    $data = mysqli_fetch_assoc($RslistUser);
-    if (mysqli_num_rows($RslistUser) > 0) {
+    if (isset($_POST["usuario"])) {
+        $RslistUser = mysqli_query($cn, "select * from usuarios where NomUser='" . $_POST["usuario"] . "'  and Password='" . $_POST["password"] . "'");
+        $data = mysqli_fetch_assoc($RslistUser);
+        if (mysqli_num_rows($RslistUser) > 0) {
 
-        $_SESSION["idusuario"] = $data["IdUsuario"];
-        $_SESSION["usuario"] = $data["Nombres"] . " " . $data["Apellidos"];
-        $_SESSION["Correo"] = $data["Correo"];
-        $_SESSION["Img"] = $data["Img"];
-        header('location:index.php');
-    } else {
-        $respuesta = "Contraseña incorrecta";
+            $_SESSION["idusuario"] = $data["IdUsuario"];
+            $_SESSION["usuario"] = $data["Nombres"] . " " . $data["Apellidos"];
+            $_SESSION["Correo"] = $data["Correo"];
+            $_SESSION["Img"] = $data["Img"];
+            header('location:index.php');
+        } else {
+            $respuesta = "Contraseña incorrecta";
+        }
     }
 }
 
@@ -30,6 +32,7 @@ $RsUser = mysqli_query($cn, "select * from usuarios");
 
 <!DOCTYPE html>
 <html lang="en">
+
 <head>
     <meta charset="UTF-8">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
@@ -42,6 +45,7 @@ $RsUser = mysqli_query($cn, "select * from usuarios");
     <script src="lib/materialize/js/materialize.min.js"></script>
     <title>Document</title>
 </head>
+
 <body class="light-blue darken-4">
     <div class="section"></div>
     <main>
@@ -80,11 +84,14 @@ $RsUser = mysqli_query($cn, "select * from usuarios");
                             </div>
                             <label style='float: right;'>
                                 <a class='pink-text' href='#!'><b>¿Olvidó su contraseña?</b></a>
-                                <p> <span style="color:green; font-size: 15px;"><?php echo $respuesta ?></span></p>
                             </label>
                         </div>
+                        <div class='row'>
+                            <div class='input-field col s12'>
+                                <span style="color:green; font-size: 15px;"><?php echo $respuesta ?></span>
+                            </div>
+                        </div>
 
-                        <br />
                         <center>
                             <div class='row'>
                                 <button type='submit' name='login' class='col s12 btn btn-large waves-effect light-blue darken-4'>Ingresar</button>
