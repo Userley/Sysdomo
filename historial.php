@@ -134,7 +134,26 @@ INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Des
           </tr>";
             }
             ?>
+
           </tbody>
+          <tfoot>
+
+
+            <tr>
+              <ul class="pagination center-align">
+                <?php
+                $count = mysqli_num_rows($Rs);
+                $totalIndice = ($count / 50);
+                if ($totalIndice > round($totalIndice)) {
+                  $totalIndice = $totalIndice + 1;
+                }
+                for ($i = 1; $i <= round($totalIndice); $i++) {
+                  echo "<li class='waves-effect'><a href='historial.php?id=" . $i . "'>$i</a></li>";
+                }
+                ?>
+              </ul>
+            </tr>
+          </tfoot>
         </table>
       </div>
 
