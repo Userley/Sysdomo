@@ -335,14 +335,61 @@ while ($item = mysqli_fetch_array($Rs)) {
 				div.innerHTML = "<br>Latitud: " + latitud + "<br>Longitud: " + longitud; //Imprime latitud y longitud
 			}		
     </script> -->
-  <script>
+  <!-- <script>
     var latitud = '';
     var longitud = '';
     navigator.geolocation.getCurrentPosition(function(location) {
       latitud = location.coords.latitude;
       longitud = location.coords.longitude;
     });
+  </script> -->
+
+
+  <script>
+    //<![CDATA[
+    var latitud = '';
+    var longitud = '';
+    var watchId;
+    /* Controlamos los tiempos de espera mínimo y máximo de nuestra geolocalización respecto a la petición anterior */
+    var PositionOptions = {
+      timeout: 5000,
+      maximumAge: 60000,
+      enableHighAccurace: true // busca la mejor forma de geolocalización (GPS, tiangulación, ...)
+    };
+    /* Utiliza la geolocalalización solamente cuando se solicita.
+    Con PositionOptions aseguramos que la posición no corresponde a caché */
+
+    if (navigator.geolocation) {
+      browserSupportFlag = true;
+      var watchId = navigator.geolocation.getCurrentPosition(successCallback, errorCallback, PositionOptions);
+    } else {
+
+    }
+
+
+    function successCallback(pos) {
+      latitud = pos.coords.latitude.toFixed(6); // Limito decimales de coordenadas a 6 
+      longitud = pos.coords.longitude.toFixed(6);
+    };
+    /* Posibles errores que se pueden producir en la geolocalización */
+    function errorCallback(error) {
+      var appErrMessage = null;
+      if (error.core == error.PERMISSION_DENIED) {
+        appErrMessage = "El usuario no ha concedido los privilegios de geolocalización"
+      } else if (error.core == error.POSITION_UNAVAILABLE) {
+        appErrMessage = "Posicion no disponible"
+      } else if (error.core == error.TIMEOUT) {
+        appErrMessage = "Demasiado tiempo intentando obtener la localización del usuario."
+      } else if (error.core == error.UNKNOWN) {
+        appErrMessage = "Error desconocido"
+      } else {
+        appErrMessage = "Error insesperado"
+      }
+    };
+    //]]>
   </script>
+
+
   <?php
   include 'lib/tools/validacionInterruptores.php';
   ?>

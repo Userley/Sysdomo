@@ -33,7 +33,7 @@ $img = $_SESSION["Img"];
 
 $Rs = mysqli_query($cn, "SELECT concat(U.Nombres,' ', U.Apellidos) AS Usuario,U.NomUser, U.Img, D.Nombre,H.Estado , H.Fecha, H.Hora, H.Latitud, H.Longitud FROM usuarios U
 INNER JOIN historial H ON H.IdUsuario=U.IdUsuario
-INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Hora Desc");
+INNER JOIN dispositivos D ON D.IdDispositivo=H.IdDispositivo ORDER BY H.Fecha Desc");
 ?>
 
 <!DOCTYPE html>
